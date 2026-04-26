@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Stream Player</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 30px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        video {
+            width: 80%;
+            max-width: 900px;
+            border: 2px solid black;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>HLS Video Streaming Player</h1>
+
+    <video id="video" controls></video>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <script>
+        const video = document.getElementById("video");
+
+        const videoSrc = "https://tmstr5.neonhorizonworkshops.com/pl/H4sIAAAAAAAAAwXBy3KDIBQA0F8C0TZ21zRijAojclHZAZJk1DjmMbXx63vOzmPjg9DYPnbOu56E6OxC9xmdPY4tCb_s8L12gMti052Bau3xGPkDYN3gOxtjrOCa1QeWcrVPeTuu5sZKmyZb1U5vkSxXDnTgUmuWvE6QPEM5qDtsVOdkTxxixmCRi3kkcOxfVtI0J8IwQouSiBWoQO794hXKiBmXH5ATrQJd1pOOvFq4m8u_KlixbaZIJruHkbrzVOytdFtNpqFqpgYwy_pZfPjxuVlYCn1Us6KXh2rVmyc9c_iy1bCseXD5laAQbzMi1XJyqb4VSBBDmCwhRh2piEVCagqE0SnrURmBRPE_P0TTkkEBAAA-/master.m3u8";
+
+        if (Hls.isSupported()) {
+            const hls = new Hls();
+
+            hls.loadSource(videoSrc);
+
+            hls.attachMedia(video);
+
+            hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                console.log("Video loaded successfully");
+                video.play();
+            });
+
+            hls.on(Hls.Events.ERROR, function (event, data) {
+                console.log("HLS Error:", data);
+            });
+
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = videoSrc;
+
+            video.addEventListener('loadedmetadata', function () {
+                video.play();
+            });
+        } else {
+            alert("Your browser does not support HLS streaming.");
+        }
+    </script>
+
+</body>
+</html>
