@@ -1,0 +1,83 @@
+.oramaTextGlitch {
+  position: relative;
+  display: inline-block;
+}
+
+/* Responsive Netflix style zoom */
+.oramaEngineWrapper {
+  transition: transform 4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(0.9);
+  opacity: 0;
+}
+
+.oramaEngineWrapper.animateZoom {
+  transform: scale(1.1); /* Reduced scale on mobile, will adjust via media query */
+  opacity: 1;
+}
+
+/* Desktop zoom */
+@media (min-width: 768px) {
+  .oramaEngineWrapper.animateZoom {
+    transform: scale(1.4);
+  }
+}
+
+/* Cinematic Distortions */
+.oramaTextGlitch::before,
+.oramaTextGlitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.oramaTextGlitch::before {
+  color: #ff0000;
+  animation: glitch 4s infinite linear alternate-reverse;
+  left: 2px;
+  text-shadow: -2px 0 #ff0000;
+}
+
+.oramaTextGlitch::after {
+  color: #00ffff;
+  animation: glitch 3s infinite linear alternate-reverse;
+  left: -2px;
+  text-shadow: 2px 0 #00ffff;
+  mix-blend-mode: overlay;
+  opacity: 0.3;
+}
+
+@keyframes glitch {
+  0% { clip-path: inset(40% 0 61% 0); }
+  20% { clip-path: inset(92% 0 1% 0); }
+  40% { clip-path: inset(43% 0 1% 0); }
+  60% { clip-path: inset(25% 0 58% 0); }
+  80% { clip-path: inset(54% 0 7% 0); }
+  100% { clip-path: inset(58% 0 43% 0); }
+}
+
+.flickerOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, transparent 0%, black 100%);
+  animation: cinematicFlicker 0.1s infinite;
+  opacity: 0.05;
+}
+
+@keyframes cinematicFlicker {
+  0% { opacity: 0.05; }
+  50% { opacity: 0.08; }
+  100% { opacity: 0.05; }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
