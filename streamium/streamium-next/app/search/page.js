@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { TMDBService } from '@/lib/services/tmdb';
 import { getMLRecommendations } from '@/lib/services/ml';
 import SearchClient from './SearchClient';
